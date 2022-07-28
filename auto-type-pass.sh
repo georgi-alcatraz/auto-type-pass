@@ -31,7 +31,7 @@ function main() {
 }
 function manual_selection() {
 	password_list=$(for line in $(find ~/.password-store/ -name "*.gpg"); do echo `basename ${line%.gpg}`; done)
-	selection=$(zenity --list --text=`echo "$password_list"` --title="Choose password..." --column="Passwords" --width=600 --height=600) && selected_password=$(pass show $selection)
+	selection=$(zenity --list --title="Choose password..." --column="Passwords" --width=600 --height=600 $(echo "$password_list" | sort )) && selected_password=$(pass show $selection)
 	xdotool sleep 0.2 type ${selected_password}
 	xdotool key --delay 50 --clearmodifiers "Return" && exit 0
 }
